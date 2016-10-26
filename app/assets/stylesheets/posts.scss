@@ -1,0 +1,39 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#post_title {
+  width: 75%;
+}
+
+ #post_body {
+   height: 100px;
+    width:77%;
+}
+
+#paginator {
+  display: table;
+  margin: 0 auto;
+}
+
+#search_page_title {
+  display: inline-block;
+  margin: 13px 15% 10px 0px;
+}
+
+#search_box {
+  float:right;
+  margin-bottom: 10px;
+}
+
+#sort_box {
+  float:right
+}
+
+#sort_label {
+  display: inline-block;
+}
+
+.comment_info {
+  margin: 15px;
+}

@@ -1,0 +1,17 @@
+<h1>Create a Post</h1>
+<p class="error"><%= @post.errors.full_messages.join(', ') %></p>
+<%= form_for @post do |p| %>
+  <div>
+    <%= p.label :title  %>
+    <%= p.text_field :title %>
+  </div>
+  <div>
+    <%= p.label :category_id %>
+    <%= p.collection_select(:category_id, Category.all, :id, :name) %>
+  </div>
+  <div>
+    <%= p.label :body  %>
+    <%= p.text_field :body %>
+  </div>
+  <%= p.submit %>
+<% end %>

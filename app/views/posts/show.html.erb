@@ -1,0 +1,34 @@
+<h1><%= @post.title %></h1>
+<p>By <%= @post.user.first_name %> <%= @post.user.last_name %>
+  <br>Posted: <%= @post.created_at %>
+  <br>Category: <%= @post.category.name %></p>
+<p><%= @post.body %></h1>
+<br>
+<%= link_to 'edit', edit_post_path(@post)%>
+<%= link_to 'delete', post_path(@post),
+                        method: :delete,
+                        data: {confirm: 'Are you sure?'}%>
+<hr>
+<h2>Write a Comment</h2>
+<%= @comment.errors.full_messages.join(', ') %>
+<%= form_for [@post, @comment] do |f| %>
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit 'Post Comment'%>
+<% end %>
+
+<h2>Comments</h2>
+<% @post.comments.each do |com| %>
+  <div>
+    <%= com.user.first_name %> <%= com.user.last_name %> :<%= com.created_at %>
+    <p class="comment_info"><%= com.body %>
+    </p>
+    <%= link_to 'edit', edit_post_comment_path(@post, com)%>
+    <%= link_to 'delete', post_comment_path(@post, com),
+                          method: :delete,
+                          data: {confirm: 'Are you sure?'}%>
+  </div>
+  <hr>
+  <% end %>

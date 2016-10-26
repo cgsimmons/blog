@@ -1,0 +1,17 @@
+<h1>Change Password</h1>
+<div class="error"><%= @user.errors.full_messages.join(", ") %></div>
+<%= form_for @user, url: user_passwords_url do |f| %>
+  <div>
+    <%= f.label :old_password %>
+    <%= f.password_field :old_password %>
+  </div>
+  <div>
+    <%= f.label :new_password %>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <%= f.submit 'Change Password' %>
+<% end %>

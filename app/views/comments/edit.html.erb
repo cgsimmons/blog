@@ -1,0 +1,10 @@
+<h1>Edit Comment</h1>
+<p class="error"><%= @post.errors.full_messages.join(', ') %></p>
+<%= form_for [@post, @comment] do |c| %>
+  <div>
+    <%= c.label :body  %><br>
+    <%= c.text_area :body %>
+  </div>
+  <%= c.submit 'Save Changes'%>
+  <%= button_to "Cancel", post_path(@post), method: :get %>
+<% end %>
