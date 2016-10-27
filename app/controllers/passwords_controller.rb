@@ -14,11 +14,15 @@ class PasswordsController < ApplicationController
                        .permit([:old_password,
                                 :password,
                                 :password_confirmation])
-    if @user.authenticate(user_params[:old_password]) &&
-      @user.update({password: user_params[:password],
-        password_confirmation: user_params[:password_confirmation]})
-        redirect_to edit_user_path(@user), notice: 'Password Updated'
+
+    if !@user.authenticate(user_params[:old_password])
+      flash[:notice] = 'Old password is invalid.'
+      render :edit
+    elsif @user.update({password: user_params[:password],
+      password_confirmation: user_params[:password_confirmation]})
+      redirect_to edit_user_path(@user), notice: 'Password Updated'
     else
+      flash[:notice] = 'Password not changed.'
       render :edit
     end
   end

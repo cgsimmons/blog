@@ -10,12 +10,14 @@
 end
 User.connection.execute('ALTER SEQUENCE users_id_seq RESTART WITH 1')
 password = "password"
+counter = 0
 20.times do
   User.create(first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
-              email: Faker::Internet.email,
+              email: Faker::Internet.email.gsub('@', "-#{counter += 1}@"),
               password_digest: User.new(:password => password).password_digest)
 end
+
 50.times do
   date = Faker::Time.between(5.years.ago, Date.today)
   post = Post.create(title: Faker::StarWars.quote,

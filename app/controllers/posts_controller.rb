@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
+  before_action :authorize_access, only: [:edit, :update, :destroy]
+
   def index
     if params[:search]
       if params[:sort_by] == 'category_id'
@@ -47,11 +49,17 @@ class PostsController < ApplicationController
   def create
     post_params = params.require(:post).permit(:title, :body, :category_id)
     @post = Post.new post_params
+    @post.user = current_user
     if @post.save
       redirect_to post_path(@post)
     else
       render :new
     end
+  end
 
+  def authorize_access
+    unless can? :manage, @post
+      redirect_to root_path, alert: 'Access Denied'
+    end
   end
 end
