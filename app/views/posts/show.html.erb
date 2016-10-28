@@ -4,7 +4,7 @@
   <br>Category: <%= @post.category.name %></p>
 <p><%= @post.body %></h1>
 <br>
-<% if can? :manage, @post %>
+<% if can? :modify, @post %>
   <%= link_to 'edit', edit_post_path(@post)%>
   <%= link_to 'delete', post_path(@post),
                           method: :delete,
@@ -27,7 +27,7 @@
     <%= com.user.first_name %> <%= com.user.last_name %> :<%= com.created_at %>
     <p class="comment_info"><%= com.body %>
     </p>
-    <% if can? [:edit, :destroy], com%>
+    <% if can? :modify, com%>
       <%= link_to 'edit', edit_post_comment_path(@post, com)%>
       <%= link_to 'delete', post_comment_path(@post, com),
                             method: :delete,

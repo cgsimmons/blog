@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
 
   private
   def authorize_access
-    unless can? [:edit, :update, :destroy], @comment
+    unless can? :modify, Comment
       redirect_to post_path(params[:post_id]), alert: 'Access Denied'
     end
   end

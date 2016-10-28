@@ -10,13 +10,15 @@ class Ability
       # else
       #   can :read, :all
       # end
-
       # Author can manage his/her post of comments
-      can :manage, [Post, Comment] do |pc|
-        pc.user == user
+
+      alias_action :edit, :update, :destroy, :to => :modify
+
+      can :modify, Post do |p|
+        p.user == user
       end
 
-      can [:edit, :update, :destroy], Comment do |a|
+      can :modify, Comment do |a|
         a.user == user || a.post.user == user
       end
 

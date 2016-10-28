@@ -58,7 +58,7 @@ class PostsController < ApplicationController
   end
 
   def authorize_access
-    unless can? :manage, @post
+    unless can? :modify, Post
       redirect_to root_path, alert: 'Access Denied'
     end
   end
