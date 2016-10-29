@@ -21,6 +21,14 @@ class Ability
         a.user == user || a.post.user == user
       end
 
+      can :favorite, Post do |p|
+        p.user != user
+      end
+
+      cannot :favorite, Post do |p|
+        p.user == user
+      end
+
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.

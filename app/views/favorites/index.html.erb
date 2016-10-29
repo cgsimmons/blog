@@ -1,0 +1,14 @@
+<h1><%= "#{@user.full_name}'s Favorites" %></h1>
+
+  <br>
+  <div style="clear:both">
+  <% if !@favorites.present? %>
+    <p>You currently do not have any favorite posts.</p>
+  <% else %>
+    <% @favorites.each do |p| %>
+      <%= link_to p.title, post_path(p) %>
+      <hr>
+    <% end %>
+  <% end %>
+  </div>
+  <div class="paginator"><%= paginate @favorites %></div>

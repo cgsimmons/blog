@@ -5,7 +5,7 @@
   <%= submit_tag "Search" %><br>
   <div id="sort_box">
     <%= label_tag :sort_by, nil, id: 'sort_label'%>
-    <%= select_tag :sort_by, options_for_select([['Title','title'], ['Category', 'category_id'], ['Newest', 'created_at']])  %>
+    <%= select_tag :sort_by, options_for_select([['Newest', 'created_at'],['Title','title'], ['Category', 'category_id']], params[:sort_by])  %>
   </div>
   <% end %>
 </div>

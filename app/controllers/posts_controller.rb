@@ -7,17 +7,20 @@ class PostsController < ApplicationController
       if params[:sort_by] == 'category_id'
         @posts = Post.search(params[:search]).joins(:category).order('name ASC').page(params[:page]).per(10)
         # @post = Post.search(params[:search]).join(:categories).order('name').page(params[:page]).per(10)
+      elsif params[:sort_by] == 'created_at'
+        @posts = Post.search(params[:search]).order("created_at DESC").page(params[:page]).per(10)
       else
         @posts = Post.search(params[:search]).order(params[:sort_by]).page(params[:page]).per(10)
       end
     else
-      @posts = Post.order(:created_at).page(params[:page]).per(10)
+      @posts = Post.order("created_at DESC").page(params[:page]).per(10)
     end
   end
 
 
   def show
     @post = Post.find(params[:id])
+    @favorite = @post.favorite_for(current_user)
     @comment = Comment.new
   end
 
