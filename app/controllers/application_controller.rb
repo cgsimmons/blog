@@ -9,9 +9,18 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if user_signed_in?
   end
   helper_method :current_user
-  
+
   def user_signed_in?
-    session[:user_id].present?
+    session[:user_id].present? && user_valid?
   end
   helper_method :user_signed_in?
+
+  def user_valid?
+    if User.find_by(id: session[:user_id]).present?
+      true
+    else
+      reset_session
+      false
+    end
+  end
 end
