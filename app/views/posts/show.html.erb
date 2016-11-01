@@ -1,9 +1,7 @@
 <h1><%= @post.title %></h1>
-<p>By <%= @post.user.full_name %>
-  <br>Posted: <%= @post.created_at %>
+<p>By <%= @post.user.full_name %> on <%= @post.created_at.strftime("%b. %e, %Y") %>
   <br>Category: <%= @post.category.name %></p>
-<p><%= @post.body %></h1>
-<br>
+<p><%= @post.body %></p>
 <% if can? :modify, @post %>
   <%= link_to 'edit', edit_post_path(@post)%>
   <%= link_to 'delete', post_path(@post),
@@ -23,7 +21,6 @@
 <div class="error"><%= @comment.errors.full_messages.join(', ') %></div>
 <%= form_for [@post, @comment] do |f| %>
   <div>
-    <%= f.label :body %>
     <%= f.text_area :body %>
   </div>
   <%= f.submit 'Post Comment'%>
@@ -32,7 +29,7 @@
 <h2>Comments</h2>
 <% @post.comments.each do |com| %>
   <div>
-    <%= com.user.first_name %> <%= com.user.last_name %> :<%= com.created_at %>
+    by <%= com.user.first_name %> <%= com.user.last_name %> on <%= com.created_at.strftime("%b. %e, %Y") %>
     <p class="comment_info"><%= com.body %>
     </p>
     <% if can? :modify, com%>
