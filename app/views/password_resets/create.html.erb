@@ -1,0 +1,4 @@
+<h1>Reset Password</h1>
+<br>
+<p>Click the link below to reset your password.  The link will expire in three days.</p>
+<%= link_to 'Reset password', edit_password_reset_url(@user.reset_token, email: @user.email) %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   # get '/' => 'home#index', as: :home
   root 'home#index'
@@ -16,4 +17,5 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :new] do
     delete :destroy, on: :collection
   end
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end
