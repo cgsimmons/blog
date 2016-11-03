@@ -10,15 +10,13 @@
 end
 puts 'Seeded categories.'
 password = "password"
-counter = 0
 20.times do
   User.create(first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
               email: Faker::Internet.email,
               password_digest: User.new(:password => password).password_digest)
 end
-puts 'Seeded users.
-'
+puts 'Seeded users.'
 50.times do
   date = Faker::Time.between(5.years.ago, Date.today)
   post = Post.create(title: Faker::StarWars.quote,

@@ -35,7 +35,11 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to posts_path
+    if can? :modify, @post
+      redirect_to posts_path
+    else
+      redirect_to root_path
+    end
   end
 
   def update
