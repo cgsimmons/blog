@@ -10,8 +10,19 @@
     <%= p.collection_select(:category_id, Category.all, :id, :name) %>
   </div>
   <div>
+    <%= p.label :tag_ids, 'Tags' %>
+    <%= p.collection_select(
+  :tag_ids, Tag.all, :id, :name, {},
+  {multiple: true, class: 'chosen-select' }
+) %>
+  </div>
+  <div>
     <%= p.label :body  %>
     <%= p.text_area :body %>
   </div>
   <%= p.submit %>
 <% end %>
+
+<script>
+$('.chosen-select').chosen({width: '300px'})
+</script>

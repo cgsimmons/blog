@@ -44,7 +44,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    post_params = params.require(:post).permit(:title, :body, :category_id)
+    post_params = params.require(:post).permit(:title, :body, :category_id,tag_ids: [])
     if @post.update post_params
       redirect_to post_path(@post)
     else
@@ -54,7 +54,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    post_params = params.require(:post).permit(:title, :body, :category_id)
+    post_params = params.require(:post).permit(:title, :body, :category_id,tag_ids: [])
     @post = Post.new post_params
     @post.user = current_user
     if @post.save

@@ -8,13 +8,9 @@
                           method: :delete,
                           data: {confirm: 'Are you sure?'}%>
 <% end %>
-<% if (user_signed_in?) && (can? :favorite, @post) %>
-  <% if @favorite.present? %>
-    <%= link_to 'unfavorite', post_favorite_path(@post, @favorite), method: :delete %>
-  <% else %>
-    <%= link_to 'favorite', post_favorites_path(@post), method: :post%>
-  <% end %>
-<% end %>
+<div id="favorites">
+  <%= render 'favorites/favorite'%>
+</div>
 
 <hr>
 <h2>Write a Comment</h2>

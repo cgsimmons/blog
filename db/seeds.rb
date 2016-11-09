@@ -9,6 +9,12 @@
   Category.create(name: Faker::Company.name)
 end
 puts 'Seeded categories.'
+
+10.times do
+  Tag.create(name: Faker::Company.buzzword)
+end
+puts "Seeded tags."
+
 password = "password"
 20.times do
   User.create(first_name: Faker::Name.first_name,
