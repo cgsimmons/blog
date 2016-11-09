@@ -1,0 +1,13 @@
+<div id="<%= dom_id(com) %>">
+  by <%= com.user.first_name %> <%= com.user.last_name %> on <%= com.created_at.strftime("%b. %e, %Y") %>
+  <p class="comment_info"><%= com.body %>
+  </p>
+  <% if can? :modify, com%>
+    <%= link_to 'edit', edit_comment_path(com)%>
+    <%= link_to 'delete', comment_path(com),
+                          remote: true,
+                          method: :delete,
+                          data: {confirm: 'Are you sure?'}%>
+  <% end %>
+  <hr>
+</div>

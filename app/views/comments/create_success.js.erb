@@ -1,0 +1,5 @@
+$('#comments').prepend("<%= j render 'comment', com: @comment %>");
+$('#comments').children().first().hide();
+<% @comment = Comment.new %>
+$('#comment-form').html('<%= j render 'form' %>');
+$('#comments').children().first().fadeIn(800);

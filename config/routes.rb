@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # get '/' => 'home#index', as: :home
   root 'home#index'
   get '/about' => 'home#about'
-  resources :posts do
+  resources :posts, shallow: true do
     resources :comments
     resources :favorites, only: [:create, :destroy]
   end

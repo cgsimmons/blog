@@ -14,26 +14,12 @@
 
 <hr>
 <h2>Write a Comment</h2>
-<div class="error"><%= @comment.errors.full_messages.join(', ') %></div>
-<%= form_for [@post, @comment] do |f| %>
-  <div>
-    <%= f.text_area :body %>
-  </div>
-  <%= f.submit 'Post Comment'%>
-<% end %>
-
+<div id="comment-form">
+  <%= render 'comments/form' %>
+</div>
 <h2>Comments</h2>
-<% @post.comments.each do |com| %>
-  <div>
-    by <%= com.user.first_name %> <%= com.user.last_name %> on <%= com.created_at.strftime("%b. %e, %Y") %>
-    <p class="comment_info"><%= com.body %>
-    </p>
-    <% if can? :modify, com%>
-      <%= link_to 'edit', edit_post_comment_path(@post, com)%>
-      <%= link_to 'delete', post_comment_path(@post, com),
-                            method: :delete,
-                            data: {confirm: 'Are you sure?'}%>
-    <% end %>
-  </div>
-  <hr>
+<div id="comments">
+  <% @post.comments.each do |comment| %>
+    <%= render 'comments/comment', {com: comment} %>
   <% end %>
+</div>

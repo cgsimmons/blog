@@ -8,22 +8,31 @@ class CommentsController < ApplicationController
     @comment = Comment.new comment_params
     @comment.post = @post
     @comment.user = current_user
-    if @comment.save
-      redirect_to post_path(@post), notice: 'Added comment successfully.'
-    else
-      flash[:alert] = 'Comment was not added successfully'
-      render "posts/show"
+
+    respond_to do |format|
+
+      if @comment.save
+        format.js {render :create_success}
+        format.html{redirect_to post_path(@post), notice: 'Added comment successfully.'}
+      else
+        format.js{render :create_failure}
+        format.html do
+          flash[:alert] = 'Comment was not added successfully'
+          render "posts/show"
+        end
+      end
+
     end
   end
 
   def edit
-    @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
+    @post = @comment.post
   end
 
   def update
-    @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
+    @post = @comment.post
     comment_params = params.require(:comment).permit(:body)
     @comment.post = @post
     if @comment.update comment_params
@@ -35,9 +44,18 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    @comment.destroy
-    @post = Post.find(params[:post_id])
-    redirect_to post_path(@post), notice: "Deleted comment sucessfully."
+    @post = @comment.post
+    respond_to do |format|
+
+      if @comment.destroy
+        format.js {render}
+        format.html {redirect_to post_path(@post), notice: "Deleted comment sucessfully."}
+      else
+        format.js {render js: 'alert("Access denied!");'}
+        format.html {redirect_to post_path(@post), notice: "Access denied!"}
+      end
+
+    end
   end
 
   private

@@ -1,0 +1,7 @@
+<div class="error"><%= @comment.errors.full_messages.join(', ') %></div>
+<%= form_for [@post, @comment], remote: true do |f| %>
+  <div>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit 'Post Comment'%>
+<% end %>
