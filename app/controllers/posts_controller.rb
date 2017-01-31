@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
+  before_action :find_post, only: [:edit, :update, :destroy, :show]
   before_action :authorize_access, only: [:edit, :update, :destroy]
 
   def index
@@ -19,7 +20,6 @@ class PostsController < ApplicationController
 
 
   def show
-    @post = Post.find(params[:id])
     @favorite = @post.favorite_for(current_user)
     @comment = Comment.new
   end
@@ -29,11 +29,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
     if can? :modify, @post
       redirect_to posts_path
@@ -43,7 +41,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
     post_params = params.require(:post).permit(:title, :body, :category_id,tag_ids: [])
     if @post.update post_params
       redirect_to post_path(@post)
@@ -64,8 +61,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def find_post
+    @post = Post.find(params[:id])
+  end
+
   def authorize_access
-    unless can? :modify, Post
+    unless can? :modify, @post
       redirect_to root_path, alert: 'Access Denied'
     end
   end
